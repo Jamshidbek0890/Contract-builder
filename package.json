@@ -1,0 +1,49 @@
+{
+  "name": "contract-builder",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "build": "NODE_ENV='production' webpack",
+    "start": "webpack-dev-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shahzod418/Contract-builder.git"
+  },
+  "author": "Davlatov Shahzod",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shahzod418/Contract-builder/issues"
+  },
+  "homepage": "https://github.com/shahzod418/Contract-builder#readme",
+  "devDependencies": {
+    "@babel/core": "^7.17.0",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.16.11",
+    "@popperjs/core": "^2.11.2",
+    "babel-loader": "^8.2.3",
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^6.6.0",
+    "html-webpack-plugin": "^5.5.0",
+    "node-sass": "^7.0.1",
+    "postcss": "^8.4.6",
+    "postcss-loader": "^6.2.1",
+    "postcss-preset-env": "^7.3.1",
+    "prettier": "^2.5.1",
+    "prettier-plugin-svelte": "^2.6.0",
+    "sass-loader": "^12.4.0",
+    "style-loader": "^3.3.1",
+    "svelte-loader": "^3.1.2",
+    "webpack": "^5.68.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4"
+  },
+  "dependencies": {
+    "bootstrap": "^5.1.3",
+    "core-js": "^3.21.0",
+    "js-html2pdf": "^1.1.4",
+    "regenerator-runtime": "^0.13.9",
+    "svelte": "^3.46.4"
+  }
+}
