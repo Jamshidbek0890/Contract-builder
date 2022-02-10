@@ -22,3 +22,19 @@ export const carPrice = writable({
   from: '',
   to: '',
 })
+export const ownership = writable({
+  short: '',
+  full: '',
+})
+export const companyName = writable()
+export const stateRegistration = writable({
+  type: '',
+  registrationNumber: '',
+  taxpayerNumber: '',
+})
+export const bankAccount = writable({
+  bankName: '',
+  bankCode: '',
+  current: '',
+  correspondent: '',
+})

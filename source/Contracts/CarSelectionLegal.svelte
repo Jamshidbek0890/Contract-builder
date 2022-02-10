@@ -4,14 +4,18 @@
     number,
     date,
     fullName,
-    passport,
     address,
     phone,
     messenger,
     email,
+    ownership,
+    companyName,
+    stateRegistration,
+    bankAccount,
   } from '../store'
 
   export let id
+  export let pageBreak
 </script>
 
 <div class="container" {id}>
@@ -35,12 +39,17 @@
   </div>
   <div class="row">
     <p>
-      Физическое лицо {#if $fullName}{$fullName}{:else}<Empty />{/if}, паспорт {#if $passport}{$passport}{:else}<Empty
-        />{/if}, проживающий по адресу: {#if $address}{$address}{:else}<Empty
-        />{/if}, именуемый в дальнейшем «Заказчик», с одной стороны и
-      __________ __________ __________ __________ __________ (__________ __________
-      __________), __________ __________, именуемый в дальнейшем «Исполнитель», с
-      другой стороны, заключили настоящий договор о нижеследующем:
+      {#if $ownership.full}{$ownership.full}{:else}<Empty />{/if}
+      {#if $fullName}{$fullName} ({$ownership.short}
+        {$fullName.split(' ')[0]}
+        {$fullName.split(' ')[1][0]}. {$fullName.split(
+          ' '
+        )[2][0]}.){:else if $companyName}{$companyName}{:else}<Empty />{/if}, {#if $stateRegistration.registrationNumber}{$stateRegistration.type}:
+        {$stateRegistration.registrationNumber}{:else}<Empty />{/if}, именуемый
+      в дальнейшем «Заказчик», с одной стороны и _______________ _______________
+      _______________ _______________ _______________ (_______________ _______________), _______________ № _______________,
+      именуемый в дальнейшем «Исполнитель», с другой стороны, заключили
+      настоящий договор о нижеследующем:
     </p>
   </div>
   <div class="row">
@@ -76,7 +85,7 @@
     <p class="text-justify">2.3. Заказчик обязуется:</p>
     <p class="text-justify html2pdf__page-break">
       2.3.1. До начала поиска Автомобиля оплатить на расчетный счет Исполнителя
-      задаток в размере 100 000 (ста тысяч) рублей.
+      задаток в размере _______________ (_______________) рублей.
     </p>
     <p class="text-justify">
       2.3.2. В случае отказа Заказчика от услуг Исполнителя по каким либо
@@ -108,8 +117,7 @@
   <div class="row">
     <h6 class="text-center fw-bold mt-3">3. Порядок расчетов по договору</h6>
     <p class="text-justify">
-      3.2.1. Стоимость услуг по настоящему Договору составляет 100 000 (сто
-      тысяч) рублей.
+      3.2.1. Стоимость услуг по настоящему Договору составляет _______________ (_______________) рублей.
     </p>
   </div>
   <div class="row">
@@ -172,68 +180,138 @@
       <table
         class="table table-responsive table-bordered border-secondary align-middle text-center"
       >
+        <thead>
+          <tr>
+            <th />
+            <th>
+              Заказчик<br />{#if $fullName}<span class="fw-normal"
+                  >{$ownership.short} {$fullName}</span
+                >{:else if $companyName}{$ownership.short}
+                {$companyName}{:else}<Empty />{/if}
+            </th>
+            <th>
+              Исполнитель<br /><span class="fw-normal"
+                >_______________ _______________ _______________ _______________</span
+              >
+            </th>
+          </tr>
+        </thead>
         <tbody>
           <tr>
-            <td>
-              <span class="fw-bold">Заказчик</span><br
-              />{#if $fullName}{$fullName}{:else}<Empty />{/if}
-            </td>
-            <td>
-              <span class="fw-bold">Исполнитель</span><br />__________ __________ __________
-              <br />__________
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Адрес: {#if $address}{$address}{:else}<Empty />{/if}</td
+            <td>ОГРНИП/ОГРН</td>
+            <td
+              >{#if $stateRegistration.registrationNumber}{$stateRegistration.type}
+                {$stateRegistration.registrationNumber}{:else}<Empty />{/if}</td
             >
-            <td>
-              Адрес: __________ __________, __________, __________ __________
-              __________, __________
-            </td>
+            <td>ОГРНИП _______________</td>
           </tr>
           <tr>
-            <td>
-              Номер телефона: {#if $phone}{$phone}{:else}<Empty />{/if}<br
-              />Мессенджер: {#if $messenger.name && $messenger.contact}{$messenger.name.join(
+            <td>ИНН</td>
+            <td
+              >{#if $stateRegistration.taxpayerNumber}{$stateRegistration.taxpayerNumber}{:else}<Empty
+                />{/if}</td
+            >
+            <td>_______________</td>
+          </tr>
+          <tr>
+            <td>Адрес регистрации</td>
+            <td
+              >{#if $address}{$address}{:else}<Empty />{/if}</td
+            >
+            <td
+              >_______________, _______________ _______________ _______________, _______________
+              _______________, _______________, _______________</td
+            >
+          </tr>
+          <tr>
+            <td>Банк</td>
+            <td
+              >{#if $bankAccount.bankName}{$bankAccount.bankName}{:else}<Empty
+                />{/if}</td
+            >
+            <td>_______________</td>
+          </tr>
+          <tr>
+            <td>БИК</td>
+            <td
+              >{#if $bankAccount.bankCode}{$bankAccount.bankCode}{:else}<Empty
+                />{/if}</td
+            >
+            <td>_______________</td>
+          </tr>
+          <tr>
+            <td>Расчётный счёт</td>
+            <td
+              >{#if $bankAccount.current}{$bankAccount.current}{:else}<Empty
+                />{/if}</td
+            >
+            <td>_______________</td>
+          </tr>
+          <tr>
+            <td>Корреспондентский счёт</td>
+            <td
+              >{#if $bankAccount.correspondent}{$bankAccount.correspondent}{:else}<Empty
+                />{/if}</td
+            >
+            <td>_______________</td>
+          </tr>
+          <tr>
+            <td>Электронная почта</td>
+            <td
+              >{#if $email}{$email}{:else}<Empty />{/if}</td
+            >
+            <td>_______________</td>
+          </tr>
+          <tr>
+            <td>Телефон</td>
+            <td
+              >{#if $phone}{$phone}{:else}<Empty />{/if}</td
+            >
+            <td>_______________</td>
+          </tr>
+          <tr>
+            <td>Мессенджер</td>
+            <td
+              >{#if $messenger.name && $messenger.contact}{$messenger.name.join(
                   '/'
                 )}
-                {$messenger.contact}{:else}<Empty />{/if}<br />Эл. почта: {#if $email}{$email}{:else}<Empty
-                />{/if}
-            </td>
-            <td>
-              Номер телефона: __________<br />Мессенджер:
-              WhatsApp/Viber/Telegram __________<br />Эл. почта:
-              __________
-            </td>
+                {$messenger.contact}{:else}<Empty />{/if}</td
+            >
+            <td>_______________ _______________</td>
           </tr>
         </tbody>
       </table>
     </div>
-  </div>
-  <div class="row d-flex flex-column">
-    <p class="col-auto">Физ. лицо:</p>
-    <p class="col-auto">
-      {#if $fullName}{$fullName}{:else}<Empty />{/if}
-    </p>
-    <div class="col-auto d-flex flex-wrap">
-      <p>
-        {#if $fullName}{$fullName.split(' ')[0]}
-          {$fullName.split(' ')[1].slice(0, 1)}.{$fullName
-            .split(' ')[2]
-            .slice(0, 1)}.{:else}<Empty />{/if}
-      </p>
-      <p>
-        {#if $fullName}_______________{:else}<Empty />{/if}
-      </p>
-    </div>
-  </div>
-  <div class="row d-flex flex-column">
-    <p class="col-auto">__________:</p>
-    <p class="col-auto">__________ __________ __________</p>
-    <div class="col-auto d-flex flex-wrap">
-      <p>__________ __________</p>
-      <p class="html2pdf__page-break">_______________</p>
+    <div class="row justify-content-md-between">
+      <div class="col-md-6 d-flex flex-column">
+        <p>
+          {#if $ownership.short}{$ownership.short}{:else}<Empty />{/if}:
+        </p>
+        <p>
+          {#if $fullName}{$fullName}{:else}<Empty />{/if}
+        </p>
+        <div class="d-flex flex-wrap">
+          <p>
+            {#if $fullName}{$ownership.short}
+              {$fullName.split(' ')[0]}
+              {$fullName.split(' ')[1][0]}. {$fullName.split(
+                ' '
+              )[2][0]}.{:else if $companyName}{$ownership.short}
+              {$companyName}{:else}<Empty />{/if}
+          </p>
+          <p>
+            {#if $fullName || $companyName}_______________{:else}<Empty />{/if}
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6 d-flex flex-column">
+        <p>_______________:</p>
+        <p>_______________ _______________ _______________</p>
+        <div class="d-flex flex-wrap">
+          <p>_______________ _______________</p>
+          <p class={pageBreak}>_______________</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -7,24 +7,34 @@
   import CarRequirements from './inputs/CarRequirements.svelte'
   import CarAppearance from './inputs/CarAppearance.svelte'
   import CarPrice from './inputs/CarPrice.svelte'
-  import Number from './inputs/Number.svelte'
+  import ContractNumber from './inputs/ContractNumber.svelte'
   import FullName from './inputs/FullName.svelte'
+  import { ownership } from '../store'
+  import TypeLlegalEntity from './inputs/TypeLlegalEntity.svelte'
+  import CompanyName from './inputs/CompanyName.svelte'
 </script>
 
 <form class="container mx-auto">
   <fieldset>
-    <legend>Номер договора</legend>
+    <legend>Данные договора</legend>
     <div class="row mb-3">
       <div class="col-md-4">
-        <Number />
+        <ContractNumber />
       </div>
     </div>
   </fieldset>
   <fieldset>
-    <legend>ФИО заказчика</legend>
-    <div class="row mb-3">
-      <FullName />
-    </div>
+    <legend>Данные юридического лица</legend>
+    <TypeLlegalEntity />
+    {#if $ownership.short === 'ИП'}
+      <div class="row mb-3">
+        <FullName />
+      </div>
+    {:else}
+      <div class="row mb-3">
+        <CompanyName />
+      </div>
+    {/if}
   </fieldset>
   <fieldset>
     <legend>Данные автодома</legend>

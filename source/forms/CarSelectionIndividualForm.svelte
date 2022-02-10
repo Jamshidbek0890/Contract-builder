@@ -1,5 +1,5 @@
 <script>
-  import Number from './inputs/Number.svelte'
+  import ContractNumber from './inputs/ContractNumber.svelte'
   import Date from './inputs/Date.svelte'
   import FullName from './inputs/FullName.svelte'
   import Passport from './inputs/Passport.svelte'
@@ -12,7 +12,7 @@
     <legend>Данные договора</legend>
     <div class="row mb-3">
       <div class="col-md-4">
-        <Number />
+        <ContractNumber />
       </div>
     </div>
     <div class="row mb-3">
