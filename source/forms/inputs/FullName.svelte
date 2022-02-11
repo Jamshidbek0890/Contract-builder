@@ -1,13 +1,5 @@
 <script>
   import { fullName } from '../../store'
-
-  let name
-  let surname
-  let fatherhood
-
-  $: if (name && surname && fatherhood) {
-    $fullName = `${surname} ${name} ${fatherhood}`
-  }
 </script>
 
 <div class="col-md-4">
@@ -16,7 +8,7 @@
     type="text"
     id="customer-surname"
     class="form-control"
-    bind:value={surname}
+    bind:value={$fullName.surname}
   />
 </div>
 <div class="col-md-4">
@@ -25,7 +17,7 @@
     type="text"
     id="customer-name"
     class="form-control"
-    bind:value={name}
+    bind:value={$fullName.name}
   />
 </div>
 <div class="col-md-4">
@@ -34,6 +26,6 @@
     type="text"
     id="customer-fatherhood"
     class="form-control"
-    bind:value={fatherhood}
+    bind:value={$fullName.fatherhood}
   />
 </div>

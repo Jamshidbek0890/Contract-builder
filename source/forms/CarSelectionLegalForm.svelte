@@ -9,6 +9,7 @@
   import CompanyName from './inputs/CompanyName.svelte'
   import BankAccount from './inputs/BankAccount.svelte'
   import TypeLlegalEntity from './inputs/TypeLlegalEntity.svelte'
+  import Deposit from './inputs/Deposit.svelte'
 </script>
 
 <form class="container mx-auto">
@@ -22,6 +23,11 @@
     <div class="row mb-3">
       <div class="col-md-4">
         <Date />
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <Deposit />
       </div>
     </div>
   </fieldset>

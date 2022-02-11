@@ -11,7 +11,7 @@
     fullName,
     number,
   } from '../store'
-  import Empty from '../Empty.svelte'
+  import Empty from '../components/Empty.svelte'
 
   export let id
 </script>
@@ -57,17 +57,18 @@
     <div class="col-md-6 d-flex flex-column">
       <p>Физ. лицо:</p>
       <p>
-        {#if $fullName}{$fullName}{:else}<Empty />{/if}
+        {#if $fullName.name && $fullName.surname && $fullName.fatherhood}{$fullName.surname}
+          {$fullName.name}
+          {$fullName.fatherhood}{:else}<Empty />{/if}
       </p>
       <div class="d-flex flex-wrap">
         <p>
-          {#if $fullName}{$fullName.split(' ')[0]}
-            {$fullName.split(' ')[1][0]}. {$fullName.split(
-              ' '
-            )[2][0]}.{:else}<Empty />{/if}
+          {#if $fullName.name && $fullName.surname && $fullName.fatherhood}{$fullName.surname}
+            {$fullName.name[0]}. {$fullName.fatherhood[0]}.{:else}<Empty />{/if}
         </p>
         <p>
-          {#if $fullName}_______________{:else}<Empty />{/if}
+          {#if $fullName.name && $fullName.surname && $fullName.fatherhood}_______________{:else}<Empty
+            />{/if}
         </p>
       </div>
     </div>

@@ -1,5 +1,5 @@
 <script>
-  import Empty from '../Empty.svelte'
+  import Empty from '../components/Empty.svelte'
   import {
     number,
     date,
@@ -12,6 +12,7 @@
     companyName,
     stateRegistration,
     bankAccount,
+    deposit,
   } from '../store'
 
   export let id
@@ -39,17 +40,20 @@
   </div>
   <div class="row">
     <p>
-      {#if $ownership.full}{$ownership.full}{:else}<Empty />{/if}
-      {#if $fullName}{$fullName} ({$ownership.short}
-        {$fullName.split(' ')[0]}
-        {$fullName.split(' ')[1][0]}. {$fullName.split(
-          ' '
-        )[2][0]}.){:else if $companyName}{$companyName}{:else}<Empty />{/if}, {#if $stateRegistration.registrationNumber}{$stateRegistration.type}:
-        {$stateRegistration.registrationNumber}{:else}<Empty />{/if}, именуемый
-      в дальнейшем «Заказчик», с одной стороны и _______________ _______________
-      _______________ _______________ _______________ (_______________ _______________), _______________ № _______________,
-      именуемый в дальнейшем «Исполнитель», с другой стороны, заключили
-      настоящий договор о нижеследующем:
+      _______________ _______________ _______________ _______________
+      _______________ (_______________ _______________ _______________),
+      _______________ № _______________, именуемый в дальнейшем «Исполнитель», с
+      одной стороны и {#if $ownership.full}{$ownership.full}{:else}<Empty
+        />{/if}
+      {#if $fullName.name && $fullName.surname && $fullName.fatherhood}{$fullName.surname}
+        {$fullName.name}
+        {$fullName.fatherhood} ({$ownership.short}
+        {$fullName.surname}
+        {$fullName.name[0]}. {$fullName
+          .fatherhood[0]}.){:else if $companyName}{$companyName}{:else}<Empty
+        />{/if}, {#if $stateRegistration.registrationNumber}{$stateRegistration.type}:
+        {$stateRegistration.registrationNumber}{:else}<Empty />{/if}, {#if $ownership.short === 'ИП'}именуемый{:else}именуемое{/if}
+      в дальнейшем «Заказчик» с другой стороны, заключили настоящий договор о нижеследующем:
     </p>
   </div>
   <div class="row">
@@ -70,11 +74,11 @@
       автомобиля.
     </p>
     <p class="text-justify">
-      2.1.2. Осуществлять осмотр предварительно отобранных Автомобилей, экспертную
-      оценку состояния этих Автомобилей, а также диагностику технического
-      состояния, внутренней оснастки (состояние салона Автомобиля) и внешнего
-      лакокрасочного покрытия с помощью технических средств, с предоставлением
-      фотографий всех видимых дефектов автомобиля, Заказчику;
+      2.1.2. Осуществлять осмотр предварительно отобранных Автомобилей,
+      экспертную оценку состояния этих Автомобилей, а также диагностику
+      технического состояния, внутренней оснастки (состояние салона Автомобиля)
+      и внешнего лакокрасочного покрытия с помощью технических средств, с
+      предоставлением фотографий всех видимых дефектов автомобиля, Заказчику;
     </p>
     <p class="text-justify">
       2.1.3. Осуществить юридическую проверку Автомобиля и предоставить
@@ -85,7 +89,7 @@
     <p class="text-justify">2.3. Заказчик обязуется:</p>
     <p class="text-justify html2pdf__page-break">
       2.3.1. До начала поиска Автомобиля оплатить на расчетный счет Исполнителя
-      задаток в размере _______________ (_______________) рублей.
+      задаток в размере {#if $deposit}{$deposit}{:else}<Empty />{/if} рублей.
     </p>
     <p class="text-justify">
       2.3.2. В случае отказа Заказчика от услуг Исполнителя по каким либо
@@ -109,15 +113,16 @@
       Заказчиком отдельно путём оформления расписок.
     </p>
     <p class="text-justify">
-      2.3.5. Автомобиль будет передан Исполнителем Заказчику после выплаты полной
-      стоимости Автомобиля указанного в письме подтверждении и оформлен по
-      договору купли - продажи на Заказчика.
+      2.3.5. Автомобиль будет передан Исполнителем Заказчику после выплаты
+      полной стоимости Автомобиля указанного в письме подтверждении и оформлен
+      по договору купли - продажи на Заказчика.
     </p>
   </div>
   <div class="row">
     <h6 class="text-center fw-bold mt-3">3. Порядок расчетов по договору</h6>
     <p class="text-justify">
-      3.2.1. Стоимость услуг по настоящему Договору составляет _______________ (_______________) рублей.
+      3.2.1. Стоимость услуг по настоящему Договору составляет {#if $deposit}{$deposit}{:else}<Empty
+        />{/if} рублей.
     </p>
   </div>
   <div class="row">
@@ -184,14 +189,19 @@
           <tr>
             <th />
             <th>
-              Заказчик<br />{#if $fullName}<span class="fw-normal"
-                  >{$ownership.short} {$fullName}</span
+              Заказчик<br
+              />{#if $fullName.name && $fullName.surname && $fullName.fatherhood}<span
+                  class="fw-normal"
+                  >{$ownership.short}
+                  {$fullName.surname}
+                  {$fullName.name}
+                  {$fullName.fatherhood}</span
                 >{:else if $companyName}{$ownership.short}
                 {$companyName}{:else}<Empty />{/if}
             </th>
             <th>
               Исполнитель<br /><span class="fw-normal"
-                >_______________ _______________ _______________ _______________</span
+                >_______________ _______________ _______________</span
               >
             </th>
           </tr>
@@ -203,7 +213,7 @@
               >{#if $stateRegistration.registrationNumber}{$stateRegistration.type}
                 {$stateRegistration.registrationNumber}{:else}<Empty />{/if}</td
             >
-            <td>ОГРНИП _______________</td>
+            <td>_______________</td>
           </tr>
           <tr>
             <td>ИНН</td>
@@ -219,8 +229,8 @@
               >{#if $address}{$address}{:else}<Empty />{/if}</td
             >
             <td
-              >_______________, _______________ _______________ _______________, _______________
-              _______________, _______________, _______________</td
+              >_______________, _______________, _______________,
+              _______________ _______________, _______________, _______________</td
             >
           </tr>
           <tr>
@@ -282,35 +292,37 @@
         </tbody>
       </table>
     </div>
-    <div class="row justify-content-md-between">
-      <div class="col-md-6 d-flex flex-column">
+  </div>
+  <div class="row justify-content-md-between">
+    <div class="col-md-6 d-flex flex-column">
+      <p>
+        {#if $ownership.short}{$ownership.short}{:else}<Empty />{/if}:
+      </p>
+      <p>
+        {#if $fullName.name && $fullName.surname && $fullName.fatherhood}{$fullName.surname}
+          {$fullName.name}
+          {$fullName.fatherhood}{:else if $companyName}{$companyName}{:else}<Empty
+          />{/if}
+      </p>
+      <div class="d-flex flex-wrap">
         <p>
-          {#if $ownership.short}{$ownership.short}{:else}<Empty />{/if}:
+          {#if $fullName.name && $fullName.surname && $fullName.fatherhood}{$ownership.short}
+            {$fullName.surname}
+            {$fullName.name[0]}. {$fullName
+              .fatherhood[0]}.{:else if $companyName}{$ownership.short}
+            {$companyName}{:else}<Empty />{/if}
         </p>
         <p>
-          {#if $fullName}{$fullName}{:else}<Empty />{/if}
+          {#if $fullName || $companyName}_______________{:else}<Empty />{/if}
         </p>
-        <div class="d-flex flex-wrap">
-          <p>
-            {#if $fullName}{$ownership.short}
-              {$fullName.split(' ')[0]}
-              {$fullName.split(' ')[1][0]}. {$fullName.split(
-                ' '
-              )[2][0]}.{:else if $companyName}{$ownership.short}
-              {$companyName}{:else}<Empty />{/if}
-          </p>
-          <p>
-            {#if $fullName || $companyName}_______________{:else}<Empty />{/if}
-          </p>
-        </div>
       </div>
-      <div class="col-md-6 d-flex flex-column">
-        <p>_______________:</p>
-        <p>_______________ _______________ _______________</p>
-        <div class="d-flex flex-wrap">
-          <p>_______________ _______________</p>
-          <p class={pageBreak}>_______________</p>
-        </div>
+    </div>
+    <div class="col-md-6 d-flex flex-column">
+      <p>_______________:</p>
+      <p>_______________ _______________ _______________</p>
+      <div class="d-flex flex-wrap">
+        <p>_______________ _______________</p>
+        <p class={pageBreak}>_______________</p>
       </div>
     </div>
   </div>

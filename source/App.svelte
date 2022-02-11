@@ -1,49 +1,10 @@
 <script>
   import Form from './forms/Form.svelte'
-  import CarSelectionIndividual from './Contracts/CarSelectionIndividual.svelte'
-  import CarSelectionIndividualAnnex from './Contracts/CarSelectionIndividualAnnex.svelte'
-  import CarSelectionIndividualForm from './forms/CarSelectionIndividualForm.svelte'
-  import CarSelectionIndividualAnnexForm from './forms/CarSelectionIndividualAnnexForm.svelte'
-  import CarSelectionLegal from './Contracts/CarSelectionLegal.svelte'
-  import CarSelectionLegalForm from './forms/CarSelectionLegalForm.svelte'
-  import CarSelectionLegalAnnex from './Contracts/CarSelectionLegalAnnex.svelte'
-  import CarSelectionLegalAnnexForm from './forms/CarSelectionLegalAnnexForm.svelte'
-  import DownloadPDF from './DownloadPDF.svelte'
+  import DisplayContract from './components/DisplayContract.svelte'
+  import DownloadPDF from './components/DownloadPDF.svelte'
+  import { contracts } from './store'
 
-  const contracts = [
-    {
-      name: 'Подбор автотранспортного средства для физ лиц',
-      components: [
-        {
-          name: 'Договор',
-          component: CarSelectionIndividual,
-          form: CarSelectionIndividualForm,
-        },
-        {
-          name: 'Приложение',
-          component: CarSelectionIndividualAnnex,
-          form: CarSelectionIndividualAnnexForm,
-        },
-      ],
-    },
-    {
-      name: 'Подбор автотранспортного средства для юр лиц',
-      components: [
-        {
-          name: 'Договор',
-          component: CarSelectionLegal,
-          form: CarSelectionLegalForm,
-        },
-        {
-          name: 'Приложение',
-          component: CarSelectionLegalAnnex,
-          form: CarSelectionLegalAnnexForm,
-        },
-      ],
-    },
-  ]
-
-  let selected = contracts[0]
+  let selected = $contracts[0]
   let selectedContainer = selected.components[0].component
 
   const handleChangeContract = () => {
@@ -65,7 +26,7 @@
       class="form-select"
       on:change={handleChangeContract}
     >
-      {#each contracts as contract}
+      {#each $contracts as contract}
         <option value={contract}>{contract.name}</option>
       {/each}
     </select>
@@ -105,25 +66,9 @@
       {/if}
     </div>
   </div>
-  {#if selectedContainer === 'all'}
-    {#each selected.components as { component }}
-      <div
-        class="col-12 col-xl-10 border border-secondary mx-auto overflow-scroll mb-3"
-        style="max-height: 500px"
-      >
-        <svelte:component
-          this={component}
-          id={component.name}
-          pageBreak={'html2pdf__page-break'}
-        />
-      </div>
-    {/each}
-  {:else}
-    <div
-      class="col-12 col-xl-10 border border-secondary mx-auto overflow-scroll"
-      style="max-height: 500px"
-    >
-      <svelte:component this={selectedContainer} id={selectedContainer.name} />
-    </div>
-  {/if}
+</section>
+<section class="row mt-3">
+  <div class="col mx-auto">
+    <DisplayContract {selected} {selectedContainer} />
+  </div>
 </section>
