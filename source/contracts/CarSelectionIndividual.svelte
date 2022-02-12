@@ -247,3 +247,12 @@
     </div>
   </div>
 </div>
+
+<style>
+    h5 {
+        font-size: 18px;
+    }
+    p, td {
+        font-size: 14px;
+    }
+</style>

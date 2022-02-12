@@ -82,3 +82,9 @@
     </div>
   </div>
 </div>
+
+<style>
+    p, li {
+        font-size: 14px;
+    }
+</style>
